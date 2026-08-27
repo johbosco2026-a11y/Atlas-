@@ -1,0 +1,63 @@
+version: 1
+application:
+  name: Autonomous Webapp Engineering Control Plane
+  production: https://main.vercel.app
+  source_of_truth: main
+routes:
+  required:
+    - /
+    - /findings
+    - /repairs
+    - /deployments
+  critical_paths:
+    - operator-dashboard
+    - inspection-run
+    - repair-review
+    - preview-validation
+architecture:
+  protected_boundaries:
+    - authentication
+    - production-database
+    - deployment-policy
+  environment_expectations:
+    - vercel-preview-url
+    - production-read-only-database
+    - git-branch-protection
+rules:
+  no_console_errors: true
+  no_broken_images: true
+  no_dead_links: true
+  mobile_must_work: true
+  production_database_read_only: true
+  direct_production_modification: forbidden
+repair:
+  automatic: true
+  branch_prefix: heal/
+  smallest_safe_change: true
+  rollback_on_failure: true
+  required_gates:
+    - build
+    - unit
+    - e2e
+    - visual
+    - preview-browser
+    - independent-review
+deployment:
+  provider: vercel
+  strategy: preview_then_production
+  production_branch: main
+  preview_branch_pattern: heal/*
+  promotion_requires:
+    - passing-reinspection
+    - independent-review-approved
+    - all-required-gates
+autonomy:
+  default_level: repair
+  levels:
+    observer: inspect-only
+    repair: human-approval-required
+    autonomous: repair-test-promote
+    self-optimizing: governed-experiments
+schedule:
+  nightly_scan_utc: "0 0 2 * * *"
+  experiment_policy: measure-then-keep-or-revert

@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1787783853448,
+      "tag": "0000_easy_bloodaxe",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1787784209644,
+      "tag": "0001_dark_phantom_reporter",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1787785828767,
+      "tag": "0002_nasty_cerise",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/mysql2";
+import { applicationMaps, engineeringMemoryRecords, experimentRecords, governanceAuditEvents, inspectionFindings, InsertUser, repairCandidates, users } from "../drizzle/schema";
+import { ENV } from "./_core/env";
+
+let _db: ReturnType<typeof drizzle> | null = null;
+export async function getDb() { if (!_db && process.env.DATABASE_URL) { try { _db = drizzle(process.env.DATABASE_URL); } catch (error) { console.warn("[Database] Failed to connect:", error); _db = null; } } return _db; }
+export async function upsertUser(user: InsertUser): Promise<void> { if (!user.openId) throw new Error("User openId is required for upsert"); const db = await getDb(); if (!db) return; const values: InsertUser = { openId: user.openId }; const updateSet: Record<string, unknown> = {}; for (const field of ["name", "email", "loginMethod"] as const) if (user[field] !== undefined) { values[field] = user[field] ?? null; updateSet[field] = user[field] ?? null; } values.role = user.role ?? (user.openId === ENV.ownerOpenId ? "admin" : "user"); updateSet.role = values.role; values.lastSignedIn = user.lastSignedIn ?? new Date(); updateSet.lastSignedIn = values.lastSignedIn; await db.insert(users).values(values).onDuplicateKeyUpdate({ set: updateSet }); }
+export async function getUserByOpenId(openId: string) { const db = await getDb(); if (!db) return undefined; const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1); return result[0]; }
+export async function recordGovernanceAuditEvent(input: { eventType: "inspection" | "branch" | "preview" | "review" | "promotion" | "rollback" | "memory"; title: string; detail: string; outcome: string; branch?: string; previewUrl?: string; payload?: string }) { const db = await getDb(); if (!db) return null; await db.insert(governanceAuditEvents).values(input); return true; }
+export async function recordEngineeringMemory(input: { memoryType: "incident" | "fix" | "architecture" | "decision"; title: string; pattern: string; summary: string; tags?: string; protected?: "true" | "false" }) { const db = await getDb(); if (!db) return null; await db.insert(engineeringMemoryRecords).values(input); return true; }
+export async function persistInspectionFinding(input: typeof inspectionFindings.$inferInsert) { const db = await getDb(); if (!db) return null; await db.insert(inspectionFindings).values(input); return true; }
+export async function persistRepairCandidate(input: typeof repairCandidates.$inferInsert) { const db = await getDb(); if (!db) return null; await db.insert(repairCandidates).values(input); return true; }
+export async function persistApplicationMap(input: typeof applicationMaps.$inferInsert) { const db = await getDb(); if (!db) return null; await db.insert(applicationMaps).values(input); return true; }
+export async function persistExperimentRecord(input: typeof experimentRecords.$inferInsert) { const db = await getDb(); if (!db) return null; await db.insert(experimentRecords).values(input); return true; }
