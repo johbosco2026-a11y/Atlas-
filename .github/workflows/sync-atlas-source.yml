@@ -42,6 +42,8 @@ jobs:
           
           rm -f atlas-source-sync.zip
           
+          rm -f .github/workflows/control-plane.yml
+          
           git config user.name "atlas-sync-bot"
           
           git config user.email "atlas-sync-bot@users.noreply.github.com"
@@ -52,6 +54,7 @@ jobs:
           
           git push
           
+
 
 
 
