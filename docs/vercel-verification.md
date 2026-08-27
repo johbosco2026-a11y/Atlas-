@@ -1,20 +1,33 @@
 # Vercel Deployment Verification Record
 
-## Repository and project linkage
+## Linked services
 
-- Repository: `https://github.com/johbosco2026-a11y/Atlas-`
-- Vercel project: `atlas` (`prj_jiht4VQO1c9mafWixdf3Cx8iriUw`)
-- Linked branch: `main`
-- Deployment alias: `https://atlas-git-main-johbosco2026-a11ys-projects.vercel.app`
+| Service | Identifier | Status |
+| --- | --- | --- |
+| GitHub repository | `johbosco2026-a11y/Atlas-` | Linked to Vercel |
+| Vercel project | `atlas` (`prj_jiht4VQO1c9mafWixdf3Cx8iriUw`) | Active |
+| Production branch | `main` | Protected from ordinary autonomous repair writes |
+| Repair branch | `heal/vercel-entrypoint` | Active Preview candidate |
 
-## Observed repair sequence
+## Original production defect
 
-1. The first Git-connected deployment reached Vercel but served `NOT_FOUND`, because its repository revision contained no deployable output.
-2. The uploaded source initially failed dependency installation because `patches/wouter@3.7.1.patch` was missing.
-3. A user-authorized patch-file commit restored the missing file, followed by a Vercel installation safeguard.
-4. The subsequent build surfaced an invalid third-party Wouter patch. The local package configuration and lockfile were regenerated without the obsolete patch declaration; local type checking and all 10 unit tests passed.
-5. The corrected `package.json` and `pnpm-lock.yaml` were committed to `main` in GitHub as `7f5de04` ("Remove invalid Wouter patch configuration").
+The initial Git-connected `main` deployment (`e075aaa`) completed successfully in Vercel but served the bundled Node server JavaScript at `/`, rather than the Atlas HTML dashboard. A **READY** deployment status was therefore not treated as a release approval.
 
-## Current verification action
+## Isolated runtime repair
 
-The next automatic Vercel build triggered by commit `7f5de04` must be confirmed as `READY` and its public endpoint must be re-inspected before the Atlas project is considered externally verified. No automated production promotion has been requested or performed by the control plane.
+The approved repair branch separates the Vite static client from the serverless API runtime. Vercel serves `dist/public` at the dashboard root and routes `/api/*` to `api/[...path].ts`. The API function imports an ESM bundle of the Express and tRPC application and packages the application constitution for serverless use.
+
+| Validation gate | Evidence | Outcome |
+| --- | --- | --- |
+| Static root response | Preview returns the Atlas HTML document, not JavaScript | Passed |
+| tRPC snapshot | `/api/trpc/controlPlane.snapshot` returns `200 application/json` | Passed |
+| Authenticated Preview inspection | Full operator dashboard rendered in the Vercel Preview | Passed |
+| Protected Preview browser suite | Private bypass supplied only through process environment | Passed: desktop and mobile |
+| Local type and unit tests | `pnpm check` and 13 Vitest tests | Passed |
+| Remote GitHub Actions | Run `#6`, commit `01b716e` | Passed: install, type, unit, Chromium, desktop/mobile Playwright |
+
+Vercel Authentication remains enabled. No bypass value is committed or documented in this repository. The archived one-time source synchronization mechanism was retired from the repair branch after its bootstrap purpose was complete.
+
+## Promotion status
+
+The candidate is validated for **Level 1 human-approved Repair**. It has not been merged into `main`, and no production deployment has been changed by the control plane. A separate, explicit operator approval is required before opening or merging the production pull request; production must then be re-inspected at its root and snapshot endpoint.
