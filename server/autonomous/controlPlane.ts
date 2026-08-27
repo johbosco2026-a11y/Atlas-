@@ -9,7 +9,11 @@ export type CandidateStatus = "draft" | "preview-ready" | "reviewing" | "approve
 export type RepairCandidate = { id: string; title: string; branch: string; baseBranch: "main"; status: CandidateStatus; changedFiles: string[]; summary: string; gates: Record<RepairGate, "pending" | "passed" | "failed">; reviewerDecision: "pending" | "approved" | "rejected"; previewUrl: string; createdAt: string };
 export type AuditEvent = { id: string; type: "inspection" | "branch" | "preview" | "review" | "promotion" | "rollback" | "memory"; title: string; detail: string; timestamp: string; tone: "success" | "warning" | "neutral" | "danger" };
 
-export const applicationContractPath = resolve(process.cwd(), "autonomous/application-contract.yaml");
+const applicationContractPaths = [
+  resolve(process.cwd(), "autonomous/application-contract.yaml"),
+  resolve(process.cwd(), "dist/serverless/application-contract.yaml"),
+];
+export const applicationContractPath = applicationContractPaths.find(existsSync) ?? applicationContractPaths[0];
 export const applicationContractYaml = existsSync(applicationContractPath) ? readFileSync(applicationContractPath, "utf8") : "";
 
 type Contract = { version?: number; routes?: { required?: string[]; critical_paths?: string[] }; architecture?: { protected_boundaries?: string[]; environment_expectations?: string[] }; rules?: Record<string, boolean | string>; repair?: { branch_prefix?: string; required_gates?: string[] }; deployment?: { provider?: string; strategy?: string; production_branch?: string; preview_branch_pattern?: string }; schedule?: { nightly_scan_utc?: string; experiment_policy?: string } };

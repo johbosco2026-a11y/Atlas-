@@ -1,59 +1,25 @@
 {
-  
   "installCommand": "pnpm install --no-frozen-lockfile",
-  
   "buildCommand": "pnpm run build",
-  
   "outputDirectory": "dist/public",
-  
   "rewrites": [
-    
     {
-      
       "source": "/api/:path*",
-      
       "destination": "/api/[...path]"
-      
     }
-    
   ],
-  
-  "git": {
-    
-    "deploymentEnabled": {
-      
-      "main": true,
-      
-      "heal/*": true
-      
+  "functions": {
+    "api/[...path].ts": {
+      "includeFiles": "dist/serverless/**"
     }
-    
   },
-  
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "heal/*": true
+    }
+  },
   "github": {
-    
     "silent": true
-    
   }
-  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
