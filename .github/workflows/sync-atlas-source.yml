@@ -8,7 +8,7 @@ on:
   
   push:
   
-    branches: [main]
+    branches: [main, "heal/*"]
     
     paths: [atlas-source-sync.zip]
     
