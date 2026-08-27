@@ -1,0 +1,42 @@
+{
+  "build_command": "pnpm run build",
+  "capabilities": [
+    "server",
+    "db",
+    "user"
+  ],
+  "dev_command": "pnpm run dev",
+  "env_vars": {
+    "DATABASE_URL": "mysql://4SSzMevtTNPu2sM.55c8ade6e036:3V9zs5gDx6fT9Veyr9ux@gateway03.us-east-1.prod.aws.tidbcloud.com:4000/R9Fv424Z3NVgmatGQMvpsL?ssl={\"rejectUnauthorized\":true}"
+  },
+  "experiments": [
+    "no_db_push"
+  ],
+  "git_remote": {
+    "repo_url": "https://7f0548f6b28a1758d9bf7be630d36cb4.artifacts.cloudflare.net/git/prod/R9Fv424Z3NVgmatGQMvpsL.git",
+    "expiration": "2026-08-27T22:37:19.366Z",
+    "token": "art_v2_x_e07b5855f29bf30c0551a25e146ab5f0ba8e3812?expires=1787870239",
+    "backend": "GIT_BACKEND_ARTIFACTS"
+  },
+  "name": "webapp",
+  "path": "/home/ubuntu/webapp",
+  "port": 3000,
+  "secrets": {
+    "BUILT_IN_FORGE_API_KEY": "W7Nq8iH2ctm6V3R9wA5qz7",
+    "BUILT_IN_FORGE_API_URL": "https://forge.manus.ai",
+    "JWT_SECRET": "g8wtx2zcZ9GtZBHBQMC5KM",
+    "OAUTH_SERVER_URL": "https://api.manus.im",
+    "OWNER_NAME": "Bosco John",
+    "OWNER_OPEN_ID": "W6Ao3qU66oLHFAeRubhVzp",
+    "VITE_ANALYTICS_ENDPOINT": "https://manus-analytics.com",
+    "VITE_ANALYTICS_WEBSITE_ID": "9dae1b0b-a4d7-49dc-97dc-b11caef46c67",
+    "VITE_APP_ID": "R9Fv424Z3NVgmatGQMvpsL",
+    "VITE_APP_LOGO": "",
+    "VITE_APP_TITLE": "Autonomous Webapp Engineering Control Plane",
+    "VITE_FRONTEND_FORGE_API_KEY": "EydSvwdzDBjoG87HUDoR4r",
+    "VITE_FRONTEND_FORGE_API_URL": "https://forge.manus.ai",
+    "VITE_OAUTH_PORTAL_URL": "https://manus.im"
+  },
+  "template_id": "web-db-user",
+  "test_command": "pnpm test"
+}

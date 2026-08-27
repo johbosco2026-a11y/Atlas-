@@ -1,0 +1,11 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "main": true,
+      "heal/*": true
+    }
+  },
+  "github": {
+    "silent": true
+  }
+}
