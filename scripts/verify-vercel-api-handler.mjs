@@ -1,8 +1,6 @@
-import { createRequire } from "node:module";
 import { createServer } from "node:http";
 
-const require = createRequire(import.meta.url);
-const { vercelApiHandler } = require("../dist/serverless/control-plane.cjs");
+const { vercelApiHandler } = await import(new URL("../dist/serverless/control-plane.mjs", import.meta.url));
 const server = createServer(vercelApiHandler);
 
 await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));

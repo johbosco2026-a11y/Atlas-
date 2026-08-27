@@ -25,6 +25,7 @@ describe("Vercel control-plane API entry", () => {
     expect(config.functions["api/[...path].ts"].includeFiles).toBe("dist/serverless/**");
 
     const apiEntrypoint = readFileSync(path.resolve(process.cwd(), "api/[...path].ts"), "utf8");
-    expect(apiEntrypoint).toContain("dist/serverless/control-plane.cjs");
+    expect(apiEntrypoint).toContain("dist/serverless/control-plane.mjs");
+    expect(apiEntrypoint).toContain("import(bundleUrl)");
   });
 });

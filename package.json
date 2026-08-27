@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
-    "build": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && mkdir -p dist/serverless && esbuild server/vercelEntry.ts --platform=node --packages=external --bundle --format=cjs --outfile=dist/serverless/control-plane.cjs && cp autonomous/application-contract.yaml dist/serverless/application-contract.yaml",
+    "build": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && mkdir -p dist/serverless && esbuild server/vercelEntry.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/serverless/control-plane.mjs && cp autonomous/application-contract.yaml dist/serverless/application-contract.yaml",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
