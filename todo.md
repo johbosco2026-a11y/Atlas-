@@ -16,20 +16,36 @@
 - [x] Implement nightly scan configuration and governed keep-or-revert experiment records.
 - [x] Add Vitest coverage for constitution validation, governance policies, diagnostics, repair gating, and dashboard data procedures.
 - [x] Run type checking, unit tests, visual verification, and create a downloadable ZIP export.
-- [ ] Select and connect the target Git repository and Vercel project before enabling live preview deployments or production promotion.
-- [ ] Review the account repositories, select an authorized target, and link the selected Git repository to Vercel without a production promotion.
-- [ ] Validate the supplied `johbosco2026-a11y/Atlas-*` repository reference before linking its `main` and `heal/*` branch flow to Vercel.
-- [ ] Resolve the connected GitHub token’s write permission for `johbosco2026-a11y/Atlas-` through the supplied repository settings.
-- [ ] Verify the newly signed-in GitHub browser session and refresh the connected integration’s repository authorization before retrying the Atlas source push.
-- [ ] Upload the verified Atlas Control Plane source to the authorized empty `johbosco2026-a11y/Atlas-` repository through the approved signed-in browser session.
-- [ ] Verify that the Vercel GitHub App can access `johbosco2026-a11y/Atlas-` before creating any preview-only Vercel linkage.
-- [ ] Inspect the user-created Vercel Atlas deployment, including status, environment, and available preview history, without promoting production.
-- [ ] Verify the uploaded Atlas source revision, the resulting Vercel build output, and the public deployment response.
-- [ ] Add the user-approved `patches/wouter@3.7.1.patch` artifact to the repository and verify the automatic Vercel rebuild.
-- [ ] Commit the Vercel `installCommand` safeguard that resolves the observed `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` build failure, then verify the rebuild.
-- [ ] Verify that the approved Vercel configuration repair creates a successful build from the current `main` revision before final handoff.
-- [ ] Remove or regenerate the invalid Wouter patch configuration that causes Vercel `ERR_PNPM_INVALID_PATCH`, then verify a clean remote build.
-- [ ] Upload the approved corrected `package.json` and `pnpm-lock.yaml` files to `main`, then verify the triggered Vercel build.
-- [ ] Synchronize the missing `client/`, `server/`, `autonomous/`, `drizzle/`, `.github/`, `docs/`, `scripts/`, and shared-source directories into the Atlas repository, then verify a complete Vercel build.
-- [ ] Upload the user-approved complete verified source tree to `main` and confirm that Vercel receives every required application directory.
-- [ ] Bootstrap the approved GitHub source-tree upload with the scoped archive synchronization workflow, then verify the resulting Vercel build.
+- [x] Select and connect the target Git repository and Vercel project before enabling live preview deployments or production promotion.
+- [x] Review the account repositories, select an authorized target, and link the selected Git repository to Vercel without a production promotion.
+- [x] Validate the supplied `johbosco2026-a11y/Atlas-*` repository reference before linking its `main` and `heal/*` branch flow to Vercel.
+- [x] Establish an approved GitHub browser/workflow write path after the direct CLI token remained write-restricted.
+- [x] Verify the newly signed-in GitHub browser session and refresh the connected integration’s repository authorization before retrying the Atlas source push.
+- [x] Upload the verified Atlas Control Plane source to the authorized `johbosco2026-a11y/Atlas-` repository through the approved signed-in browser session.
+- [x] Verify that the Vercel GitHub App can access `johbosco2026-a11y/Atlas-` before creating any preview-only Vercel linkage.
+- [x] Inspect the user-created Vercel Atlas deployment, including status, environment, and available preview history, without promoting production.
+- [x] Verify the uploaded Atlas source revision, the resulting Vercel build output, and the public deployment response.
+- [x] Add the user-approved `patches/wouter@3.7.1.patch` artifact to the repository and verify the automatic Vercel rebuild.
+- [x] Commit the Vercel `installCommand` safeguard that resolves the observed `ERR_PNPM_LOCKFILE_CONFIG_MISMATCH` build failure, then verify the rebuild.
+- [x] Verify that the approved Vercel configuration repair creates a successful build from the current `main` revision before final handoff.
+- [x] Remove the invalid Wouter patch configuration that caused Vercel `ERR_PNPM_INVALID_PATCH`, then verify a clean remote build.
+- [x] Upload the approved corrected `package.json` and `pnpm-lock.yaml` files to `main`, then verify the triggered Vercel build.
+- [x] Synchronize the required application source directories into the Atlas repository; the intended CI workflow remains separately pending because the bootstrap token cannot edit workflow files.
+- [x] Add the missing `.github/workflows/control-plane.yml` to the remote repair branch and verify its type, unit, and browser gates.
+- [ ] Re-verify the remote `main` tree against local source after the CI-workflow gap is resolved.
+- [x] Bootstrap the approved GitHub source-tree upload with the scoped archive synchronization workflow, then verify the resulting Vercel build.
+- [x] Update the one-time sync workflow to exclude `.github/workflows/control-plane.yml`, then confirm the complete source tree is synchronized.
+- [x] Add the approved manual trigger to the one-time sync workflow and run it against the existing `atlas-source-sync.zip` archive.
+- [x] Preserve the active sync workflow during archive extraction so the GitHub Actions token does not attempt to modify any workflow file during the source synchronization commit.
+- [x] Apply the approved final sync-workflow preservation correction and re-run the existing archive synchronization job.
+- [x] Configure Vercel to serve `dist/public` at the dashboard root and route `/api/*` to the Express/tRPC serverless handler, then verify the guarded Preview HTML and snapshot responses.
+- [x] Support a private Vercel deployment-protection bypass header in Preview Playwright runs without committing its value.
+- [x] Configure the remote Playwright workflow to start the Atlas local server before running browser tests.
+- [x] Remove the duplicate pnpm version declaration from the remote CI workflow and verify a successful repair-branch run.
+- [x] Run mobile-emulation checks in the CI-installed Chromium browser and eliminate unresolved analytics placeholders from local test pages.
+- [ ] Obtain independent review and explicit Level 1 operator approval before promoting `heal/vercel-entrypoint` to `main`.
+- [ ] Merge only the user-approved repair branch to `main`, then re-verify the protected Vercel production root, snapshot endpoint, and browser suite.
+- [ ] Remove or disable the temporary archive synchronization workflow after the repaired production deployment is verified.
+- [ ] Replace Manus-specific scheduling, authentication, persistence, and LLM runtime dependencies with production-grade Vercel-compatible integrations or explicit graceful-degradation paths.
+- [ ] Connect real GitHub and Vercel service actions to the governed repair workflow without granting direct autonomous production-write capability.
+- [ ] Make candidate review, discard, promotion, and audit mutations fully durable and operator-authenticated rather than partially in-memory/public.
