@@ -28,4 +28,11 @@ describe("Vercel control-plane API entry", () => {
     expect(apiEntrypoint).toContain("dist/serverless/control-plane.mjs");
     expect(apiEntrypoint).toContain("import(bundleUrl)");
   });
+
+  it("uses Vercel's non-secret bypass-cookie contract for protected browser checks", () => {
+    const playwrightConfig = readFileSync(path.resolve(process.cwd(), "playwright.config.ts"), "utf8");
+    expect(playwrightConfig).toContain('"x-vercel-protection-bypass": protectionBypass');
+    expect(playwrightConfig).toContain('"x-vercel-set-bypass-cookie": "true"');
+    expect(playwrightConfig).not.toContain("opeIeg8bOxjpDxF1SNiNSpPWaiZHLP");
+  });
 });
