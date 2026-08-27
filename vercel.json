@@ -1,12 +1,41 @@
 {
+  
   "installCommand": "pnpm install --no-frozen-lockfile",
+  
+  "buildCommand": "pnpm run build",
+  
+  "outputDirectory": "dist/public",
+  
   "git": {
+    
     "deploymentEnabled": {
+      
       "main": true,
+      
       "heal/*": true
+      
     }
+    
   },
+  
   "github": {
+    
     "silent": true
+    
   }
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
