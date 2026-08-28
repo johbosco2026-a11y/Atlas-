@@ -2,6 +2,14 @@ import { desc } from "drizzle-orm";
 import { applicationMaps, autonomyConfigurations, engineeringMemoryRecords, experimentRecords, governanceAuditEvents, inspectionFindings, repairCandidates } from "../../drizzle/schema";
 import { getDb } from "../db";
 
+export async function requireDurableControlPlaneStore() {
+  const db = await getDb();
+  if (!db) {
+    throw new Error("Durable control-plane storage is unavailable; refusing an in-memory-only mutation.");
+  }
+  return db;
+}
+
 export async function loadDurableControlPlaneRecords() {
   const db = await getDb();
   if (!db) return null;

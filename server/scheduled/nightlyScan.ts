@@ -8,7 +8,7 @@ export function isValidVercelCronAuthorization(
   authorization: string | undefined,
   secret = process.env.CRON_SECRET,
 ): boolean {
-  const expected = createHash("sha256").update("Bearer " + (secret ?? "")).digest();
+  const expected = createHash("sha256").update(`Bearer ${secret ?? ""}`).digest();
   const actual = createHash("sha256").update(authorization ?? "").digest();
   const matches = timingSafeEqual(expected, actual);
   return Boolean(secret) && Boolean(authorization) && matches;

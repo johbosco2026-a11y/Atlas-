@@ -43,9 +43,28 @@
 - [x] Configure the remote Playwright workflow to start the Atlas local server before running browser tests.
 - [x] Remove the duplicate pnpm version declaration from the remote CI workflow and verify a successful repair-branch run.
 - [x] Run mobile-emulation checks in the CI-installed Chromium browser and eliminate unresolved analytics placeholders from local test pages.
-- [ ] Obtain independent review and explicit Level 1 operator approval before promoting `heal/vercel-entrypoint` to `main`.
-- [ ] Merge only the user-approved repair branch to `main`, then re-verify the protected Vercel production root, snapshot endpoint, and browser suite.
-- [ ] Remove or disable the temporary archive synchronization workflow after the repaired production deployment is verified.
+- [x] Obtain independent review and explicit Level 1 operator approval before promoting `heal/vercel-entrypoint` to `main`.
+- [x] Merge only the user-approved repair branch to `main`, then re-verify the protected Vercel production root and snapshot endpoint; authenticated browser evidence confirms the Atlas HTML dashboard and `/api/trpc/controlPlane.snapshot` returns HTTP 200 JSON.
+- [ ] Diagnose and correct the failed protected production Playwright reinspection, then retain the evidence or execute the documented rollback path. The failure is diagnosed as operator-side secret sequencing; successful protected reinspection remains pending.
+- [x] Remove or disable the temporary archive synchronization workflow after the repaired production deployment is verified; it is absent from the remote `main` tree.
 - [ ] Replace Manus-specific scheduling, authentication, persistence, and LLM runtime dependencies with production-grade Vercel-compatible integrations or explicit graceful-degradation paths.
 - [ ] Connect real GitHub and Vercel service actions to the governed repair workflow without granting direct autonomous production-write capability.
 - [ ] Make candidate review, discard, promotion, and audit mutations fully durable and operator-authenticated rather than partially in-memory/public.
+- [ ] Rotate the accidentally exposed deployment-protection bypass value in Vercel and revalidate protected Preview access without persisting secrets. The public-branch source removal is committed on `heal/production-validation-bypass`; rotation remains required.
+- [ ] Re-run the protected Preview Playwright suite from the `heal/production-validation-bypass` source revision; the prior operator run used local `main`, which does not include the required Vercel bypass-cookie header.
+- [ ] Re-run protected Preview Playwright with the rotated value in one correctly sequenced shell session; the attached log shows the test was ultimately launched after the environment variable had been unset, so it still reached Vercel Authentication rather than Atlas.
+- [x] Diagnose whether protected Playwright headers capture the bypass value too early or whether Windows Git Bash process sequencing prevents inheritance at test launch; apply only a validation-harness fix if confirmed. Diagnosis: operator command sequencing; no `playwright.config.ts` change required.
+- [x] Inspect the actual protected-Preview invocation script/command and add a one-line non-secret bypass-presence sanity check immediately before Playwright if a repository launcher exists. No repository launcher exists; the diagnostic remains an operator-shell instruction.
+- [x] Require authenticated admin access for Atlas control-plane mutations while retaining public read-only snapshot and constitution queries; covered by focused Vitest authorization tests.
+- [ ] Add a Vercel Cron-compatible GET path for nightly inspection with fail-closed CRON_SECRET verification and five-field UTC schedule; deploy and validate before creating or enabling any schedule.
+- [x] Review admin-auth and Vercel Cron deny-paths explicitly for missing credentials, wrong credentials, and an unset CRON_SECRET environment, then document the result before Preview deployment. Unauthorized Cron GETs now return 401; constant-length `timingSafeEqual` comparison, Manus cron identity gating, and 14 focused tests pass.
+- [x] Confirm constant-time Cron bearer comparison, unchanged Manus Heartbeat POST cron identity gating, and independent 401/body assertions for missing secret, missing header, and wrong secret.
+- [ ] Make state-changing control-plane services fail closed when the durable database is unavailable, rather than reporting in-memory mutations as durable; preserve read-only fallback snapshots.
+- [x] Make state-changing control-plane services fail closed when the durable database is unavailable, rather than reporting in-memory mutations as durable; preserve read-only fallback snapshots. Covered by a dedicated durability test.
+- [x] Replace brittle Playwright source-text header assertions with a resolved-config test using a mocked environment value and exact header-shape assertions.
+- [x] Present exact Cron authorization and resolved Playwright-header code, plus reproducible secret-safe Preview probes, for operator review before synchronization.
+- [ ] Remove stack traces from authorized scheduled-endpoint error responses, retain server-side diagnostic logging, and add regression coverage for the safe response shape.
+- [ ] Synchronize `heal/authenticated-governance-2` to GitHub through the authorized write path, wait for Vercel Preview readiness, and run the three guarded Cron probes without changing `main`.
+- [ ] Create `heal/authenticated-governance-2` from remote `main` through the authorized GitHub web path, upload only the reviewed hardening files, and validate the resulting Preview with all three Cron probes.
+- [ ] Resolve the operator checkout mismatch: add/use the repository’s actual `origin` remote, switch from `heal/production-validation-bypass` to `heal/authenticated-governance-2`, and push only that branch.
+- [ ] Recover the complete reviewed source checkpoint into the operator checkout and remove or ignore untracked `playwright-report/` and `test-results/` artifacts before the isolated push.
